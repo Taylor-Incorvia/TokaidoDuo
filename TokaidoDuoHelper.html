@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>Arrow Toggle</title>
+  <style>
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      background: white;
+      overflow: hidden;
+      touch-action: manipulation;
+      font-family: sans-serif;
+    }
+
+    #app {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 120px;
+      transform: rotate(90deg);
+      transform-origin: center center;
+    }
+
+    .arrow {
+      font-size: 100px;
+      user-select: none;
+      line-height: 1;
+    }
+
+    .right {
+      color: green;
+    }
+
+    .left {
+      color: purple;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="arrow"></div>
+    <div class="arrow"></div>
+    <div class="arrow"></div>
+  </div>
+
+  <script>
+    const arrows = document.querySelectorAll('.arrow');
+    let isUpDownUp = true;
+
+    function setArrow(el, dir) {
+      el.textContent = dir === 'up' ? '↑' : '↓';
+      el.className = 'arrow ' + (dir === 'up' ? 'right' : 'left');
+    }
+
+    function render() {
+      if (isUpDownUp) {
+        setArrow(arrows[0], 'up');
+        setArrow(arrows[1], 'down');
+        setArrow(arrows[2], 'up');
+      } else {
+        setArrow(arrows[0], 'down');
+        setArrow(arrows[1], 'up');
+        setArrow(arrows[2], 'down');
+      }
+    }
+
+    document.body.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      isUpDownUp = !isUpDownUp;
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>
