@@ -39,9 +39,33 @@
     .left {
       color: purple;
     }
+
+    #spinner-wrap {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      width: 135px;
+      height: 90px;
+      transform: translateX(-50%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    #spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 90px;
+      height: auto;
+      transform: translate(-50%, -50%) rotate(270deg);
+      transition: transform 0.5s ease-in-out;
+    }
   </style>
 </head>
 <body>
+  <div id="spinner-wrap">
+    <img id="spinner" src="dog.png" alt="" />
+  </div>
   <div id="app">
     <div class="arrow"></div>
     <div class="arrow"></div>
@@ -50,7 +74,9 @@
 
   <script>
     const arrows = document.querySelectorAll('.arrow');
+    const spinner = document.getElementById('spinner');
     let isUpDownUp = true;
+    let dogRotation = 270;
 
     function setArrow(el, dir) {
       el.textContent = dir === 'up' ? '↑' : '↓';
@@ -73,6 +99,8 @@
       e.preventDefault();
       isUpDownUp = !isUpDownUp;
       render();
+      dogRotation += 180;
+      spinner.style.transform = `translate(-50%, -50%) rotate(${dogRotation}deg)`;
     });
 
     render();
